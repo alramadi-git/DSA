@@ -4,21 +4,21 @@ public class GenerateParenthesis
 {
     public List<string> Solution(int n)
     {
-        return _GenerateParenthesis("(", 1, 0, n);
+        var stack = new List<string>();
+        _GenerateParenthesis(stack, "(", 1, 0, n);
+        
+        return stack;
     }
 
-    private List<string> _GenerateParenthesis(string str, int openedParentheses, int closedParentheses, int n)
+    private void _GenerateParenthesis(List<string> stack, string str, int openedParentheses, int closedParentheses, int n)
     {
-        var result = new List<string>();
         if (str.Length == n * 2)
         {
-            result.Add(str);
-            return result;
+            stack.Add(str);
+            return;
         }
 
-        if (openedParentheses < n) result.AddRange(_GenerateParenthesis($"{str}(", openedParentheses + 1, closedParentheses, n));
-        if (openedParentheses > closedParentheses) result.AddRange(_GenerateParenthesis($"{str})", openedParentheses, closedParentheses + 1, n));
-
-        return result;
+        if (openedParentheses < n) _GenerateParenthesis(stack, $"{str}(", openedParentheses + 1, closedParentheses, n);
+        if (openedParentheses > closedParentheses) _GenerateParenthesis(stack, $"{str})", openedParentheses, closedParentheses + 1, n);
     }
 }
